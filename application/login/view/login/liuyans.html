@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__BJS__/bootstrap.js"></script>
+    <link rel="stylesheet" href="__BCSS__/bootstrap.css"/>
+    <link rel="icon" href="__ICON__" type="image/x-icon"/>
+    <title>留言板</title>
+    <style>
+        body{
+            background: url("__IMG__/bj.jpg");
+            background-size: cover;
+            opacity:0.8;
+        }
+        .ly{
+            height:100px;
+            display: flex;
+            flex-direction: row;
+            justify-content:flex-start;
+            align-items: center;
+            word-wrap: break-word;
+        }
+        .bj_row{
+            display: flex;
+            flex-direction: row;
+        }
+        .tx{
+            height:50px;
+            width:50px;
+            border-radius:50%;
+        }
+        .tx img{
+            height:50px;
+            width:50px;
+            border-radius:50%;
+        }
+        .wm{
+            width:150px;
+            margin-left: 10px;
+            font-size: 18px;
+            font-family:"微软雅黑";
+            word-wrap: break-word;
+            color:#1E90FF	;
+        }
+        table{
+            table-layout: fixed;
+        }
+        .nr{
+            display: flex;
+            align-items: center;
+            height:80px;
+            width:370px;
+            overflow:hidden;/*超出长度的文字隐藏*/
+            word-wrap:break-word;
+
+            font-size: 16px;
+            font-family: "幼圆";
+            margin-left:10px;
+            margin-top:10px;
+            margin-bottom: 10px;
+            color:#00CD00;
+        }
+        .sj{
+            width:150px;
+            font-family: "幼圆";
+            font-size: 15px;
+        }
+        tr{
+            padding-top:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2 bj_row" style="text-align: center;">
+            <h1 class="bg-danger"><a href="/login/login/info">留言墙</a></h1>
+            <h1 class="bg-danger" style="margin-left: 20px;"><a href="/login/login/my_liuyan">我的留言</a></h1>
+            <div>
+                <form class="navbar-form navbar-left" role="search" action="{:url('/search')}" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="keyword" placeholder="搜索">
+                    </div>
+                    <button type="submit" class="btn glyphicon glyphicon-search"></button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2" style="margin-top:10px;">
+            <table class="table table-responsive">
+                {volist name="msgs" id="m"}
+                <tr>
+                    {if condition="$m.id%2==0"}
+                    <td class="success">
+                        {else/}
+                    <td class="danger">
+                        {/if}
+                        <div class="ly">
+                            <div class="tx">
+                                <img src="__IMG__/boss.jpg">
+                            </div>
+                            <div class="wm">
+                                {$m.wangming}:
+                            </div>
+                            <div class="nr">
+                                {$m.message}
+                            </div>
+                            <div class="sj">
+                                {$m.create_time}
+                                <a href="/login/login/del?id={$m.id}">删除</a>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                {/volist}
+            </table>
+            {$msgs->render()}
+        </div>
+    </div>
+    {if condition="isset($delsuccess)"}
+    <script>
+        alert("删除成功");
+    </script>
+    {/if}
+</body>
+</html>
